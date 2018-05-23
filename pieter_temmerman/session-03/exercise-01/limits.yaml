@@ -1,0 +1,18 @@
+kind: LimitRange
+apiVersion: v1
+metadata:
+  name: mem-cpu-per-pod
+  namespace: team-api
+spec:
+  limits:
+  - type: Pod
+    max:
+      cpu: 1
+      memory: 100Mi
+  - type: Container
+    default:
+      cpu: 100m
+      memory: 10Mi
+    defaultRequest:
+      cpu: 100m
+      memory: 10Mi

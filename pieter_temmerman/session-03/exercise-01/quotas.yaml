@@ -1,0 +1,29 @@
+#Node specs: 4GB memory with 2 cores
+
+#Assign 80% to vision team
+
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: visionteam-quota
+  namespace: team-vision
+spec:
+  hard:
+    request.cpu: 1600m
+    requests.memory: 3200Mi
+    limits.memory: 3200Mi
+    limits.cpu: 1600m
+---
+
+#Assign 20% to api team
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: apiteam-quota
+  namespace: team-api
+spec:
+  hard:
+    requests.cpu: 400m
+    requests.memory: 800Mi
+    limits.memory: 800Mi
+    limits.cpu: 400m

@@ -1,0 +1,32 @@
+ kind: ClusterRole
+ apiVersion: rbac.authorization.k8s.io/v1
+ metadata:
+    name: createWithoutDelete
+ rules:
+  - apiGroups: [""]
+    resources: ["*"]
+    verbs: ["create", "patch", "update","get", "list"]
+---
+ kind: ClusterRole
+ apiVersion: rbac.authorization.k8s.io/v1
+ metadata:
+    name: secretsAdmin
+ rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list", "create", "patch", "update", "delete", "watch"]
+---
+ kind: ClusterRole
+ apiVersion: rbac.authorization.k8s.io/v1
+ metadata:
+    name: createDeleteAllWithoutSecrets
+ rules:
+  - apiGroups: [""]
+    resources: ["configmaps","sevices","services/proxy","endpoints","persistentvolumeclaims","volumes","storageclasses"]
+    verbs: ["get", "list", "create", "patch", "update", "delete", "watch"]
+  - apiGroups: ["apps","extensions"]
+    resources: ["deployments","statefulsets","daemonsets", "ingresses","replicasets"]
+    verbs: ["get", "list", "create", "patch", "update", "delete", "watch"]
+  - apiGroups: ["batch"]
+    resources: ["cronjobs"]
+    verbs: ["get", "list", "create", "patch", "update", "delete", "watch"]

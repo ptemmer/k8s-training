@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mariadb-deployment
+  namespace: exercise-02
+  labels:
+    app: mariadb
+    tier: backend
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mariadb
+        tier: backend
+    spec:
+      containers:
+      - image: bitnami/mariadb:latest
+        name: mariadb
+        envFrom:
+          - configMapRef:
+              name: mariadb-config
+          - secretRef:
+              name: mariadb-secrets
+        ports:
+          - name: mariadb
+            containerPort: 3306

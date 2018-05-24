@@ -26,7 +26,14 @@ for node in $NODE1 $NODE2; do
       Slice=machine.slice
       # Env vars
       Environment=STORAGE_PATH=/opt/myapp
-      ExecStart=/usr/bin/rkt run --inherit-env --net=host coreos.com/etcd:v3.3.5
+      ExecStart=/usr/bin/rkt run --inherit-env --net=host coreos.com/etcd:v3.3.5 \\
+        --cert-file=${ETCD_SERVER_CERT_PATH} \\
+        --key-file=${ETCD_SERVER_KEY_PATH} \\
+        --trusted-ca-file=${KUBERNETES_CA_CERT_PATH} \\
+        --client-cert-auth \\
+        --advertise-client-urls https://${CONTROLLER_PRIVATE_IP}:2379,https://127.0.0.1:2379 \\
+        --listen-client-urls https://${CONTROLLER_PRIVATE_IP}:2379,https://127.0.0.1:2379 \\
+        --data-dir=/var/lib/etcd
       ExecStopPost=/usr/bin/rkt gc --mark-only
       KillMode=mixed
       Restart=always
